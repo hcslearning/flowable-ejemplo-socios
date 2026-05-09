@@ -1,0 +1,102 @@
+// despliegue 
+{
+  "id": "d408f9b0-4bce-11f1-b837-4cebbd354dff",
+  "name": "FundacionInscripcionSocio",
+  "deploymentTime": "2026-05-09T17:45:11.790Z",
+  "category": null,
+  "parentDeploymentId": "d408f9b0-4bce-11f1-b837-4cebbd354dff",
+  "url": "http://localhost:7070/flowable-rest/service/repository/deployments/d408f9b0-4bce-11f1-b837-4cebbd354dff",
+  "tenantId": ""
+}
+
+// lista definiciones de procesos 
+{
+  "data": [
+    {
+      "id": "fundacionInscripcionSocio:1:d4273013-4bce-11f1-b837-4cebbd354dff",
+      "url": "http://localhost:7070/flowable-rest/service/repository/process-definitions/fundacionInscripcionSocio:1:d4273013-4bce-11f1-b837-4cebbd354dff",
+      "key": "fundacionInscripcionSocio",
+      "version": 1,
+      "name": "Fundación Inscripción Socio",
+      "description": null,
+      "tenantId": "",
+      "deploymentId": "d408f9b0-4bce-11f1-b837-4cebbd354dff",
+      "deploymentUrl": "http://localhost:7070/flowable-rest/service/repository/deployments/d408f9b0-4bce-11f1-b837-4cebbd354dff",
+      "resource": "http://localhost:7070/flowable-rest/service/repository/deployments/d408f9b0-4bce-11f1-b837-4cebbd354dff/resources/FundacionInscripcionSocio.bpmn",
+      "diagramResource": "http://localhost:7070/flowable-rest/service/repository/deployments/d408f9b0-4bce-11f1-b837-4cebbd354dff/resources/FundacionInscripcionSocio.fundacionInscripcionSocio.png",
+      "category": "http://flowable.org/test",
+      "graphicalNotationDefined": true,
+      "suspended": false,
+      "startFormDefined": false
+    }
+  ],
+  "total": 1,
+  "start": 0,
+  "sort": "name",
+  "order": "asc",
+  "size": 1
+}
+
+// inicia instancia proceso
+{
+  "id": "721fa6c5-4bd5-11f1-b837-4cebbd354dff",
+  "url": "http://localhost:7070/flowable-rest/service/runtime/process-instances/721fa6c5-4bd5-11f1-b837-4cebbd354dff",
+  "name": null,
+  "businessKey": null,
+  "businessStatus": null,
+  "suspended": false,
+  "ended": false,
+  "processDefinitionId": "fundacionInscripcionSocio:1:d4273013-4bce-11f1-b837-4cebbd354dff",
+  "processDefinitionUrl": "http://localhost:7070/flowable-rest/service/repository/process-definitions/fundacionInscripcionSocio:1:d4273013-4bce-11f1-b837-4cebbd354dff",
+  "processDefinitionName": "Fundación Inscripción Socio",
+  "processDefinitionDescription": null,
+  "activityId": null,
+  "startUserId": "rest-admin",
+  "startTime": "2026-05-09T18:32:33.999Z",
+  "superProcessInstanceId": null,
+  "variables": [
+    {
+      "name": "rut",
+      "type": "string",
+      "value": "12345678-5",
+      "scope": "local"
+    },
+    {
+      "name": "fecha",
+      "type": "string",
+      "value": "2026-05-09T14:30:33",
+      "scope": "local"
+    },
+    {
+      "name": "monto",
+      "type": "integer",
+      "value": 5000,
+      "scope": "local"
+    },
+    {
+      "name": "diaMes",
+      "type": "integer",
+      "value": 10,
+      "scope": "local"
+    },
+    {
+      "name": "initiator",
+      "type": "string",
+      "value": "rest-admin",
+      "scope": "local"
+    },
+    {
+      "name": "nombre",
+      "type": "string",
+      "value": "Juan Pérez Rosales",
+      "scope": "local"
+    }
+  ],
+  "callbackId": null,
+  "callbackType": null,
+  "referenceId": null,
+  "referenceType": null,
+  "propagatedStageInstanceId": null,
+  "tenantId": "",
+  "completed": false
+}

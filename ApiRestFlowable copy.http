@@ -1,0 +1,250 @@
+# docs: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+### Variables Globales 
+#@authorization = Basic cmVzdC1hZG1pbjp0ZXN0
+@authorization = Basic rest-admin:test
+# para que funcionen los usuarios creados por acá con la API
+# flowable.rest.app.authentication-mode=any-user
+#@authorization = Basic lucy:1234
+@baseUrl = http://localhost:7070/flowable-rest
+@urlSwagger = {{baseUrl}}/docs
+
+### Información del engine
+GET {{baseUrl}}/service/management/engine
+Authorization: {{authorization}}
+Accept: application/json
+
+### Listar grupos
+GET {{baseUrl}}/idm-api/groups
+Authorization: {{authorization}}
+Content-Type: application/json
+
+### Crear grupo 1
+POST {{baseUrl}}/idm-api/groups
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "id": "comision-gatos",  
+  "name": "Comisión Gatos"  
+}
+
+### Crear grupo 2
+POST {{baseUrl}}/idm-api/groups
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "id": "comision-perros",  
+  "name": "Comisión Perros"  
+}
+
+### Crear grupo 3
+POST {{baseUrl}}/idm-api/groups
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "id": "comision-finanzas",  
+  "name": "Comisión de Finanzas"  
+}
+
+### Modificar grupo 
+PUT {{baseUrl}}/idm-api/groups/comision-gatos
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{  
+  "type": "security-role"
+}
+
+### Miembros de un grupo
+GET {{baseUrl}}/idm-api/users?memberOfGroup=comision-finanzas
+Authorization: {{authorization}}
+
+### Ver usuarios
+GET {{baseUrl}}/idm-api/users
+Authorization: {{authorization}}
+
+### Ver usuarios específico
+GET {{baseUrl}}/idm-api/users/lucy
+Authorization: {{authorization}}
+
+### Crear usuario 1
+POST {{baseUrl}}/idm-api/users
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "lucy",
+  "firstName": "Lucy",
+  "lastName": "La",
+  "displayName": "Lucy La",
+  "email": "lucy@gmail.com",
+  "password": "1234"
+}
+
+### Asigna usuario 1 a grupo 
+POST {{baseUrl}}/idm-api/groups/comision-gatos/members
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "userId": "lucy"
+}
+
+### Crear usuario 2
+POST {{baseUrl}}/idm-api/users
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "katniss",
+  "firstName": "Katniss",
+  "lastName": "Ossa",
+  "displayName": "Katniss Ossa",
+  "email": "katniss.ossa@gmail.com",
+  "password": "4321"
+}
+
+### Asigna usuario 2 a grupo 
+POST {{baseUrl}}/idm-api/groups/comision-perros/members
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "userId": "katniss"
+}
+
+### Crear usuario 3
+POST {{baseUrl}}/idm-api/users
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "chiqui",
+  "firstName": "Chiqui",
+  "lastName": "Neira",
+  "displayName": "Chiqui",
+  "email": "chiqui@gmail.com",
+  "password": "9876"
+}
+
+### Asigna usuario 3 a grupo 
+POST {{baseUrl}}/idm-api/groups/comision-finanzas/members
+Authorization: {{authorization}}
+Content-Type: application/json
+
+{
+  "userId": "chiqui"
+}
+
+### Grupos a los que pertenece un usuario
+GET {{baseUrl}}/idm-api/groups?member=lucy
+Authorization: {{authorization}}
+
+
+### Desplegar BPMN
+POST {{baseUrl}}/service/repository/deployments
+Authorization: {{authorization}}
+Content-Type: multipart/form-data; boundary=----Boundary
+
+------Boundary
+Content-Disposition: form-data; name="file"; filename="pruebaGrupos.bpmn"
+Content-Type: application/xml
+
+< ./pruebaGrupos.bpmn
+------Boundary--
+
+### Desplegar BPMN Timers
+POST {{baseUrl}}/service/repository/deployments
+Authorization: {{authorization}}
+Content-Type: multipart/form-data; boundary=----Boundary
+
+------Boundary
+Content-Disposition: form-data; name="file"; filename="pruebaTimers.bpmn"
+Content-Type: application/xml
+
+< ./pruebaTimers.bpmn
+------Boundary--
+
+### Desplegar BPMN con Tenant
+POST {{baseUrl}}/service/repository/deployments?tenantId=mipyme-textil
+Authorization: {{authorization}}
+Content-Type: multipart/form-data; boundary=----Boundary
+
+------Boundary
+Content-Disposition: form-data; name="file"; filename="inscripcionSocios.bpmn"
+Content-Type: application/xml
+
+< ./inscripcionSocios.bpmn
+------Boundary--
+
+### Listar instancias de procesos en ejecución
+GET {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Accept: application/json
+
+### Listar definiciones de procesos desplegados
+GET {{baseUrl}}/service/repository/process-definitions
+Authorization: {{authorization}}
+Accept: application/json
+
+### Iniciar una nueva instancia de proceso (ejemplo)
+POST {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "processDefinitionKey": "inscripcionSocios",
+  "variables": [
+    {
+      "name": "cliente",
+      "value": "Chiqui Neira"
+    },
+    {
+      "name": "monto",
+      "value": 19990
+    }
+  ]
+}
+
+### Iniciar una nueva instancia de proceso
+POST {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "processDefinitionKey": "pruebaGrupos"  
+}
+
+
+### Tareas disponibles para el grupo ...
+GET {{baseUrl}}/service/runtime/tasks?candidateGroup=comision-gatos
+Authorization: {{authorization}}
+
+# María toma una tarea
+#POST /flowable-rest/service/runtime/tasks/{taskId}
+#{ "action": "claim", "assignee": "maria" }
+
+# María completa la tarea
+#POST /flowable-rest/service/runtime/tasks/{taskId}
+#{ "action": "complete", "variables": [...] }
+
+### Tareas ordenadas por fecha de vencimiento
+GET {{baseUrl}}/service/runtime/tasks
+    ?sort=dueDate
+    &order=asc
+Authorization: {{authorization}}
+
+### Tareas ordenas por prioridad
+GET {{baseUrl}}/service/runtime/tasks
+    ?sort=priority
+    &order=desc    
+    &candidateGroups=comision-perros
+Authorization: {{authorization}}

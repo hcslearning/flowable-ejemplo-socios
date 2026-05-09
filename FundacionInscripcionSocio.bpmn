@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" exporter="Flowable Design" exporterVersion="2025.2.04" design:palette="flowable-work-process-palette">
+  <process id="fundacionInscripcionSocio" name="Fundación Inscripción Socio" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+    <extensionElements>
+      <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
+      <design:creationdate><![CDATA[2026-05-09T15:30:21.419Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2026-05-09T19:41:38.960Z]]></design:modificationdate>
+    </extensionElements>
+    <userTask id="FormTask_EvaluarPostulante" name=" Evaluar postulante" flowable:assignee="${initiator}" flowable:formFieldValidation="false">
+      <extensionElements>
+        <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
+        <flowable:allowed-input-item><![CDATA[fecha]]></flowable:allowed-input-item>
+        <flowable:allowed-input-item><![CDATA[rut]]></flowable:allowed-input-item>
+        <flowable:allowed-input-item><![CDATA[nombre]]></flowable:allowed-input-item>
+        <flowable:allowed-input-item><![CDATA[monto]]></flowable:allowed-input-item>
+        <flowable:allowed-input-item><![CDATA[diaMes]]></flowable:allowed-input-item>
+        <flowable:allowed-output-item><![CDATA[esValido]]></flowable:allowed-output-item>
+        <design:stencilid><![CDATA[FormTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </userTask>
+    <serviceTask id="ExternalWorkerTask_RegistrarSocio" name="Registrar Socio" flowable:type="external-worker" flowable:topic="registrarSocio" flowable:exclusive="false">
+      <extensionElements>
+        <design:stencilid><![CDATA[ExternalWorkerTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="ExternalWorkerTask_6" name="Notificar Rechazo" flowable:type="external-worker" flowable:topic="notificarRechazo" flowable:exclusive="false">
+      <extensionElements>
+        <design:stencilid><![CDATA[ExternalWorkerTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="ExternalWorkerTask_EnviarBienvenida" name="Enviar Bienvenida" flowable:type="external-worker" flowable:topic="enviarBienvenida" flowable:exclusive="false">
+      <extensionElements>
+        <design:stencilid><![CDATA[ExternalWorkerTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </serviceTask>
+    <exclusiveGateway id="Exclusive_Gateway_EsPostulanteValido" name="¿Inscripción Válida?">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+        <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
+      </extensionElements>
+    </exclusiveGateway>
+    <startEvent id="startEvent1" name="Postulación socio" flowable:initiator="initiator" flowable:formFieldValidation="false">
+      <extensionElements>
+        <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+        <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+        <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="EndEvent_2">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <endEvent id="EndEvent_1">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_EvaluarPostulante_2_ExclusiveGateway" sourceRef="FormTask_EvaluarPostulante" targetRef="Exclusive_Gateway_EsPostulanteValido">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_RegistrarSocio_2_EnviarBienvenida" sourceRef="ExternalWorkerTask_RegistrarSocio" targetRef="ExternalWorkerTask_EnviarBienvenida">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_NotificarRechazo_2_EndEvent" sourceRef="ExternalWorkerTask_6" targetRef="EndEvent_2">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_13" sourceRef="ExternalWorkerTask_EnviarBienvenida" targetRef="EndEvent_1">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_StartEvent_2_EvaluarPostulante" sourceRef="startEvent1" targetRef="FormTask_EvaluarPostulante">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_Gateway_2_RegistrarSocio" sourceRef="Exclusive_Gateway_EsPostulanteValido" targetRef="ExternalWorkerTask_RegistrarSocio">
+      <extensionElements>
+        <flowable:condition group="true" match="all" targetAttribute="condition">
+          <flowable:condition sourceVariableType="customVariable" sourceName="esValido" sourceType="null" operator="equals" targetVariableType="value" targetValue="true" targetType="boolean"></flowable:condition>
+        </flowable:condition>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${vars:equals(esValido, true)}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_Gateway_2_NotificarRechazo" sourceRef="Exclusive_Gateway_EsPostulanteValido" targetRef="ExternalWorkerTask_6">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${vars:equals(esValido, false)}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_fundacionInscripcionSocio">
+    <bpmndi:BPMNPlane bpmnElement="fundacionInscripcionSocio" id="BPMNPlane_fundacionInscripcionSocio">
+      <bpmndi:BPMNShape bpmnElement="FormTask_EvaluarPostulante" id="BPMNShape_FormTask_EvaluarPostulante">
+        <omgdc:Bounds height="80.0" width="100.0" x="416.0" y="236.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExternalWorkerTask_RegistrarSocio" id="BPMNShape_ExternalWorkerTask_RegistrarSocio">
+        <omgdc:Bounds height="80.0" width="100.0" x="684.0" y="132.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExternalWorkerTask_6" id="BPMNShape_ExternalWorkerTask_6">
+        <omgdc:Bounds height="80.0" width="100.0" x="684.0" y="341.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ExternalWorkerTask_EnviarBienvenida" id="BPMNShape_ExternalWorkerTask_EnviarBienvenida">
+        <omgdc:Bounds height="80.0" width="100.0" x="860.0" y="132.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Exclusive_Gateway_EsPostulanteValido" id="BPMNShape_Exclusive_Gateway_EsPostulanteValido">
+        <omgdc:Bounds height="40.0" width="40.0" x="566.0" y="256.0"></omgdc:Bounds>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="109.0" x="520.0" y="300.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="317.0" y="261.0"></omgdc:Bounds>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="96.0" x="275.9" y="295.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_2" id="BPMNShape_EndEvent_2">
+        <omgdc:Bounds height="28.0" width="28.0" x="834.0" y="367.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_1" id="BPMNShape_EndEvent_1">
+        <omgdc:Bounds height="28.0" width="28.0" x="1010.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_EvaluarPostulante_2_ExclusiveGateway" id="BPMNEdge_SequenceFlow_EvaluarPostulante_2_ExclusiveGateway" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="20.0" flowable:targetDockerY="20.0">
+        <omgdi:waypoint x="516.0" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="566.0" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_Gateway_2_NotificarRechazo" id="BPMNEdge_SequenceFlow_Gateway_2_NotificarRechazo" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="586.0" y="296.0"></omgdi:waypoint>
+        <omgdi:waypoint x="586.0" y="381.0"></omgdi:waypoint>
+        <omgdi:waypoint x="684.0" y="381.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_Gateway_2_RegistrarSocio" id="BPMNEdge_SequenceFlow_Gateway_2_RegistrarSocio" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="586.0" y="256.0"></omgdi:waypoint>
+        <omgdi:waypoint x="586.0" y="172.0"></omgdi:waypoint>
+        <omgdi:waypoint x="684.0" y="172.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_StartEvent_2_EvaluarPostulante" id="BPMNEdge_SequenceFlow_StartEvent_2_EvaluarPostulante" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="347.0" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="416.0" y="276.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_NotificarRechazo_2_EndEvent" id="BPMNEdge_SequenceFlow_NotificarRechazo_2_EndEvent" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+        <omgdi:waypoint x="784.0" y="381.0"></omgdi:waypoint>
+        <omgdi:waypoint x="834.0" y="381.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_13" id="BPMNEdge_SequenceFlow_13" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+        <omgdi:waypoint x="960.0" y="172.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1010.0" y="172.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_RegistrarSocio_2_EnviarBienvenida" id="BPMNEdge_SequenceFlow_RegistrarSocio_2_EnviarBienvenida" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="784.0" y="172.0"></omgdi:waypoint>
+        <omgdi:waypoint x="860.0" y="172.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

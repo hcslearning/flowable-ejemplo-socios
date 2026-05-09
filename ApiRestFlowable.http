@@ -1,0 +1,150 @@
+# docs: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+
+### Variables Globales 
+@authorization = Basic rest-admin:test
+
+@baseUrl = http://localhost:7070/flowable-rest
+@urlSwagger = {{baseUrl}}/docs
+
+### Información del engine
+GET {{baseUrl}}/service/management/engine
+Authorization: {{authorization}}
+Accept: application/json
+
+### Elimina los procesos de ejemplo
+@deploymentId=fe2ef16f-4be1-11f1-8eb0-4cebbd354dff
+DELETE {{baseUrl}}/service/repository/deployments/{{deploymentId}}?cascade=true
+Authorization: {{authorization}}
+
+### Desplegar BPMN
+POST {{baseUrl}}/service/repository/deployments
+Authorization: {{authorization}}
+Content-Type: multipart/form-data; boundary=----Boundary
+
+------Boundary
+Content-Disposition: form-data; name="file"; filename="FundacionInscripcionSocio.bpmn"
+Content-Type: application/xml
+
+< ./FundacionInscripcionSocio.bpmn
+------Boundary--
+
+### Listar definiciones de procesos desplegados
+GET {{baseUrl}}/service/repository/process-definitions
+Authorization: {{authorization}}
+Accept: application/json
+
+### Iniciar una nueva instancia de proceso (ejemplo)
+POST {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "processDefinitionKey": "fundacionInscripcionSocio",
+  "variables": [
+    {
+      "name": "fecha",
+      "value": "2026-05-09T14:30:33"
+    },
+    {
+      "name": "rut",
+      "value": "12345678-5"
+    },
+    {
+      "name": "nombre",
+      "value": "Juan Pérez Rosales"
+    },
+    {
+      "name": "monto",
+      "value": 5000
+    },
+    {
+      "name": "diaMes",
+      "value": 10
+    }
+  ]
+}
+
+### Listar instancias de procesos en ejecución
+GET {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Accept: application/json
+
+### Iniciar una nueva instancia de proceso (ejemplo 2)
+POST {{baseUrl}}/service/runtime/process-instances
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "processDefinitionKey": "fundacionInscripcionSocio",
+  "variables": [
+    {
+      "name": "fecha",
+      "value": "2026-05-08T12:00:59"
+    },
+    {
+      "name": "rut",
+      "value": "87654321-k"
+    },
+    {
+      "name": "nombre",
+      "value": "María José González Soto"
+    },
+    {
+      "name": "monto",
+      "value": 10000
+    },
+    {
+      "name": "diaMes",
+      "value": 20
+    }
+  ]
+}
+
+### Tareas disponibles para el grupo ...
+GET {{baseUrl}}/service/runtime/tasks
+Authorization: {{authorization}}
+
+
+@taskId1 = 737a9000-4be2-11f1-8eb0-4cebbd354dff
+@taskId2 = 3020d2fe-4be4-11f1-8eb0-4cebbd354dff
+### Obtener variables de una tarea
+GET {{baseUrl}}/service/runtime/tasks/{{taskId2}}/variables
+Authorization: {{authorization}}
+Accept: application/json
+
+### Completar UserTask y setear variable esValido
+POST {{baseUrl}}/service/runtime/tasks/{{taskId2}}
+Authorization: {{authorization}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "action": "complete",
+  "variables": [
+    {
+      "name": "esValido",
+      "type": "boolean",
+      "value": true
+    }
+  ]
+}
+
+@processInstanceId=7379f3ae-4be2-11f1-8eb0-4cebbd354dff
+### Ver actividades históricas de la instancia
+GET {{baseUrl}}/service/history/historic-activity-instances?processInstanceId={{processInstanceId}}&sort=startTime&order=asc
+Authorization: {{authorization}}
+Accept: application/json
+
+### Ver actividades históricas no terminadas
+GET {{baseUrl}}/service/history/historic-activity-instances
+?finished=false
+Authorization: {{authorization}}
+Accept: application/json
+
+### Ver variables de la instancia
+@processInstanceId=6e73c9c9-4be2-11f1-8eb0-4cebbd354dff
+GET {{baseUrl}}/service/runtime/process-instances/{{processInstanceId}}/variables
+Authorization: {{authorization}}
+Accept: application/json

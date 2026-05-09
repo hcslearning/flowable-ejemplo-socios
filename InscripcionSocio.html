@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Socios - Fundación Animal</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .bg-pattern {
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0, transparent 120px),
+        radial-gradient(circle at 80% 0%, rgba(255,255,255,0.12) 0, transparent 180px),
+        linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gray-100">
+
+  <div class="min-h-screen flex items-center justify-center p-6 bg-pattern">
+
+    <div class="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+
+      <!-- Panel izquierdo -->
+      <div class="bg-green-300 hidden md:flex flex-col justify-center p-12 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+
+        <div class="relative z-10">
+          <div class="text-6xl mb-6">🐾</div>
+
+          <h1 class="text-4xl font-bold leading-tight mb-4">
+            Ayuda a cambiar vidas
+          </h1>
+
+          <p class="text-lg text-orange-50 leading-relaxed">
+            Tu aporte mensual ayuda a rescatar, alimentar y cuidar animales que necesitan una segunda oportunidad.
+          </p>
+
+          <div class="mt-10 space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">❤️</span>
+              <span>Apoya rescates y tratamientos</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🐶</span>
+              <span>Ayuda a perros y gatos abandonados</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🏡</span>
+              <span>Contribuye a encontrar hogares responsables</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="p-8 md:p-12">
+
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-gray-800">
+            Registro de Socios
+          </h2>
+
+          <p class="text-gray-500 mt-2">
+            Completa el formulario para convertirte en socio de la fundación.
+          </p>
+        </div>
+
+        <form method="POST" action="IniciarProceso.php" class="space-y-6">
+
+          <!-- RUT -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              RUT
+            </label>
+
+            <input
+              name="rut"
+              type="text"
+              placeholder="12.345.678-9"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-orange-200 focus:border-orange-500 outline-none transition"
+            />
+          </div>
+
+          <!-- Nombre -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Nombre Completo
+            </label>
+
+            <input
+              name="nombre"
+              type="text"
+              placeholder="Tu nombre completo"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-orange-200 focus:border-orange-500 outline-none transition"
+            />
+          </div>
+
+          <!-- Monto -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Monto de Aporte Mensual
+            </label>
+
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                $
+              </span>
+
+              <input
+                name="monto"
+                type="number"
+                placeholder="10000"
+                class="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-orange-200 focus:border-orange-500 outline-none transition"
+              />
+            </div>
+          </div>
+
+          <!-- Día de pago -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Día del Mes para el Pago
+            </label>
+
+            <select
+              name="diaMes"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-4 focus:ring-orange-200 focus:border-orange-500 outline-none transition bg-white"
+            >
+              <option value="">Selecciona un día</option>
+
+              <!-- Días -->
+              <script>
+                for (let i = 1; i <= 28; i++) {
+                  document.write(`<option value="${i}">${i}</option>`);
+                }
+              </script>
+            </select>
+          </div>
+
+          <!-- Checkbox -->
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              class="mt-1 h-5 w-5 text-orange-500 rounded border-gray-300 focus:ring-orange-400"
+            />
+
+            <p class="text-sm text-gray-600">
+              Acepto realizar aportes mensuales a la fundación y autorizo el tratamiento de mis datos.
+            </p>
+          </div>
+
+          <!-- Botón -->
+          <button
+            type="submit"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+          >
+            Convertirme en Socio 🐾
+          </button>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-sm text-gray-400">
+          Fundación Animal • Gracias por ayudar ❤️
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
