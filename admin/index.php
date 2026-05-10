@@ -100,7 +100,7 @@ if (isset($_GET['logout'])) {
                                     <td class="p-5 font-bold text-slate-700"><?= $t['name'] ?></td>
                                     <td class="p-5 text-sm text-slate-400"><?= date('d/m/y H:i', strtotime($t['createTime'])) ?></td>
                                     <td class="p-5 text-right">
-                                        <a href="evaluar.php?id=<?= $t['id'] ?>" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all">GESTIONAR</a>
+                                        <a href="/admin/evaluar.php?id=<?= $t['id'] ?>" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all">GESTIONAR</a>
                                     </td>
                                 </tr>
                             <?php endforeach; else: ?>
